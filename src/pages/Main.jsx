@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import * as api from '../services/api';
 
 export default class Main extends Component {
@@ -27,6 +28,9 @@ export default class Main extends Component {
             Digite algum termo de pesquisa ou escolha uma categoria.
           </h2>
         </header>
+        <section>
+          <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
+        </section>
         <section>
           <span>Categorias:</span>
           { categories.map((category) => (
