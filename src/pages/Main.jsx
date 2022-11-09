@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import * as api from './services/api';
+import * as api from '../services/api';
 
-export default class App extends Component {
+export default class Main extends Component {
   state = {
     categories: [],
   };
