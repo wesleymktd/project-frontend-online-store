@@ -8,6 +8,7 @@ export default class Product extends Component {
     title: '',
     thumbnail: '',
     price: 0,
+    quantidade: 0,
   };
 
   componentDidMount() {
@@ -17,11 +18,15 @@ export default class Product extends Component {
   buttonDetails = () => {
     const KEY = 'product';
     const { match: { params: { id } } } = this.props;
-    const { title, price, thumbnail } = this.state;
-    const storage = { id, title, price, thumbnail };
-    const newArray = [];
-    newArray.push(storage);
-    localStorage.setItem(KEY, JSON.stringify(newArray));
+    const { title, price, thumbnail, quantidade } = this.state;
+    this.setState((prev) => ({
+      quantidade: prev.quantidade + 1,
+    }), () => {
+      const newArray = [];
+      const storage = { id, title, price, thumbnail, quantidade };
+      newArray.push(storage);
+      localStorage.setItem(KEY, JSON.stringify(newArray));
+    });
   };
 
   fetchDetailsProduct = async () => {
@@ -35,7 +40,7 @@ export default class Product extends Component {
   };
 
   render() {
-    const { title, price, thumbnail } = this.state;
+    const { title, price, thumbnail, quantidade } = this.state;
     return (
       <div>
         <Link data-testid="shopping-cart-button" to="/cart">
@@ -59,6 +64,7 @@ export default class Product extends Component {
         >
           Adicionar ao carrinho
         </button>
+        <span>{ quantidade }</span>
       </div>
     );
   }

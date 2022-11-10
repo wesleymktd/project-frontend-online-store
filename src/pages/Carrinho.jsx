@@ -30,6 +30,7 @@ export default class Carrinho extends Component {
                 thumbnail={ e.thumbnail }
                 price={ e.price }
                 id={ e.id }
+                quantidade={ e.quantidade }
               />
             ))
           )
