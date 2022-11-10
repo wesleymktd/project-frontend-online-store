@@ -14,6 +14,16 @@ export default class Product extends Component {
     this.fetchDetailsProduct();
   }
 
+  buttonDetails = () => {
+    const KEY = 'product';
+    const { match: { params: { id } } } = this.props;
+    const { title, price, thumbnail } = this.state;
+    const storage = { id, title, price, thumbnail };
+    const newArray = [];
+    newArray.push(storage);
+    localStorage.setItem(KEY, JSON.stringify(newArray));
+  };
+
   fetchDetailsProduct = async () => {
     const { match: { params: { id } } } = this.props;
     const { title, thumbnail, price } = await getProductById(id);
@@ -41,6 +51,14 @@ export default class Product extends Component {
           <img data-testid="product-detail-image" src={ thumbnail } alt={ title } />
           <p data-testid="product-detail-price">{ price }</p>
         </div>
+        <button
+          name={ title }
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ this.buttonDetails }
+        >
+          Adicionar ao carrinho
+        </button>
       </div>
     );
   }

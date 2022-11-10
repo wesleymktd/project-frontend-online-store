@@ -20,7 +20,12 @@ export default class ProductCard extends Component {
         <div
           style={ { padding: '10px' } }
         >
-          <h5 className="card-title">{ title }</h5>
+          <h5
+            data-testid="shopping-cart-product-name"
+            className="card-title"
+          >
+            { title }
+          </h5>
           <p className="card-text">{ `R$: ${price}` }</p>
         </div>
         <Link
