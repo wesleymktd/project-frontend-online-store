@@ -10,6 +10,7 @@ export default class Main extends Component {
     categories: [],
     searchInput: '',
     productsSearching: [],
+    categoryId: '',
   };
 
   componentDidMount() {
@@ -36,6 +37,19 @@ export default class Main extends Component {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
+    });
+  };
+
+  GetProductByCategory = async (e) => {
+    const { id } = e.target;
+    this.setState({
+      categoryId: id,
+    }, async () => {
+      const { searchInput, categoryId } = this.state;
+      const response = await api.getProductsFromCategoryAndQuery(categoryId, searchInput);
+      this.setState({
+        productsSearching: response.results,
+      });
     });
   };
 
@@ -80,17 +94,19 @@ export default class Main extends Component {
               <div
                 className="form-check"
                 key={ category.id }
-                data-testid="category"
+
               >
                 <label
                   className="form-check-label"
-                  htmlFor="category"
+                  htmlFor={ category.id }
                 >
                   <input
+                    data-testid="category"
+                    onClick={ this.GetProductByCategory }
                     className="form-check-input"
                     type="radio"
                     name="category"
-                    id={ category.name }
+                    id={ category.id }
                     value={ category.name }
                   />
                   { category.name }
@@ -115,4 +131,3 @@ export default class Main extends Component {
     );
   }
 }
-// g
