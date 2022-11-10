@@ -1,0 +1,30 @@
+.container {
+  text-align: center;
+  width: 80%;
+}
+
+.lead {
+  text-align: center;
+}
+
+.btn {
+  margin-left: 10px;
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  width: 1500px;
+}
+
+main {
+  display: flex;
+
+}
+
+.products {
+  align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
