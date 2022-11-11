@@ -36,6 +36,7 @@ export default class Product extends Component {
       title,
       thumbnail,
       price,
+      quantidade: 0,
     });
   };
 

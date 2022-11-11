@@ -27,7 +27,7 @@ export default class ProductCard extends Component {
             { title }
           </h5>
           <p className="card-text">{ `R$: ${price}` }</p>
-          <span data-testid="shopping-cart-product-quantity">{ quantidade }</span>
+          <span data-testid="shopping-cart-product-quantity">{ quantidade + 1 }</span>
         </div>
         <Link
           data-testid="product-detail-link"
