@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getProductById } from '../services/api';
+import { getProductById, addProductCart } from '../services/api';
 
 export default class Product extends Component {
   state = {
@@ -93,7 +93,7 @@ export default class Product extends Component {
       title,
       price, thumbnail, quantity, email, evaluation, detailEvaluation,
       isValid,
-      listEvaluation } = this.state;
+      listEvaluation, id } = this.state;
     return (
       <div>
         <div>
@@ -110,6 +110,17 @@ export default class Product extends Component {
             <img data-testid="product-detail-image" src={ thumbnail } alt={ title } />
             <p data-testid="product-detail-price">{ price }</p>
           </div>
+          <button
+            className="btn btn-success"
+            name={ title }
+            type="button"
+            data-testid="product-detail-add-to-cart"
+            onClick={ () => {
+              addProductCart(id, title, price, thumbnail);
+            } }
+          >
+            Adicionar ao carrinho
+          </button>
           <span>{ quantity }</span>
         </div>
         <form>
