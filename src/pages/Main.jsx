@@ -19,18 +19,18 @@ export default class Main extends Component {
 
   fetchCategories = async () => {
     const categories = await api.getCategories();
-    this.setState({
+    this.setState(({
       categories,
-    });
+    }));
   };
 
   SearchingProducts = async () => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery('', searchInput);
     const productsSearching = request.results;
-    this.setState({
+    this.setState(({
       productsSearching,
-    });
+    }));
   };
 
   handlerChange = (e) => {
