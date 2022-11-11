@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import * as api from '../services/api';
 
-export default class ProductCard extends Component {
+export default class ItemCart extends Component {
   render() {
-    const { title, thumbnail, price, id } = this.props;
+    const { title, thumbnail, price, quantity } = this.props;
     return (
       <div
         style={ { width: '15rem', margin: '5px' } }
@@ -28,33 +26,32 @@ export default class ProductCard extends Component {
             { title }
           </h5>
           <p className="card-text">{ `R$: ${price}` }</p>
+          <span data-testid="shopping-cart-product-quantity">{ quantity }</span>
         </div>
         <button
-          className="btn btn-success"
-          data-testid="product-add-to-cart"
+          className="btn btn-outline-dark btn-sm"
           type="button"
-          onClick={ () => {
-            api.addProductCart(id, title, price, thumbnail);
-          } }
         >
-          Adicionar ao Carrinho
+          +
         </button>
-
-        <Link
-          className="btn"
-          data-testid="product-detail-link"
-          to={ `product/${id}` }
+        <button
+          className="btn btn-outline-dark btn-sm"
+          type="button"
         >
-          Detalhes do Produto
-        </Link>
+          -
+        </button>
       </div>
     );
   }
 }
 
-ProductCard.propTypes = {
+ItemCart.propTypes = {
   title: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
+  quantity: PropTypes.number,
+};
+
+ItemCart.defaultProps = {
+  quantity: 0,
 };

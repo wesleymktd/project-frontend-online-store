@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProductCard from '../components/ProductCard';
+import ItemCart from '../components/ItemCart';
 
 export default class Carrinho extends Component {
   state = {
@@ -30,7 +30,7 @@ export default class Carrinho extends Component {
             </p>)
             : (
               cart.map((item) => (
-                <ProductCard
+                <ItemCart
                   { ...item }
                   key={ item.id }
                 />
