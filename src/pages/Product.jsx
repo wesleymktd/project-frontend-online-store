@@ -1,33 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getProductById } from '../services/api';
+import { getProductById, addProductCart } from '../services/api';
 
 export default class Product extends Component {
   state = {
     title: '',
     thumbnail: '',
     price: 0,
-    quantidade: 0,
+    id: '',
   };
 
   componentDidMount() {
     this.fetchDetailsProduct();
   }
-
-  buttonDetails = () => {
-    const KEY = 'product';
-    const { match: { params: { id } } } = this.props;
-    const { title, price, thumbnail, quantidade } = this.state;
-    this.setState((prev) => ({
-      quantidade: prev.quantidade + 1,
-    }), () => {
-      const newArray = [];
-      const storage = { id, title, price, thumbnail, quantidade };
-      newArray.push(storage);
-      localStorage.setItem(KEY, JSON.stringify(newArray));
-    });
-  };
 
   fetchDetailsProduct = async () => {
     const { match: { params: { id } } } = this.props;
@@ -36,12 +22,12 @@ export default class Product extends Component {
       title,
       thumbnail,
       price,
-      quantidade: 0,
+      id,
     });
   };
 
   render() {
-    const { title, price, thumbnail, quantidade } = this.state;
+    const { title, price, thumbnail, quantity, id } = this.state;
     return (
       <div>
         <Link data-testid="shopping-cart-button" to="/cart">
@@ -58,14 +44,17 @@ export default class Product extends Component {
           <p data-testid="product-detail-price">{ price }</p>
         </div>
         <button
+          className="btn btn-success"
           name={ title }
           type="button"
           data-testid="product-detail-add-to-cart"
-          onClick={ this.buttonDetails }
+          onClick={ () => {
+            addProductCart(id, title, price, thumbnail);
+          } }
         >
           Adicionar ao carrinho
         </button>
-        <span>{ quantidade }</span>
+        <span>{ quantity }</span>
       </div>
     );
   }
