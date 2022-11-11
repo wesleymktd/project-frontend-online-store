@@ -6,7 +6,6 @@ export async function getCategories() {
 
 export async function getProductsFromCategoryAndQuery(categoryId, query) {
   const url = `https://api.mercadolibre.com/sites/MLB/search?category=${categoryId}&q=${query}`;
-  console.log(url);
   const response = await fetch(url);
   return response.json();
 }
@@ -30,7 +29,8 @@ export async function addProductCart(id, title, price, thumbnail) {
   localStorage.setItem('cart', JSON.stringify(currentCart));
 }
 
-export async function getProductById() {
-  // Esta implementação específica não é avaliada, mas pode ajudar você 🙂
-  // Atenção: essa função não deverá ser chamada na tela do carrinho de compras.
+export async function getProductById(id) {
+  const url = `https://api.mercadolibre.com/items/${id}`;
+  const response = await fetch(url);
+  return response.json();
 }

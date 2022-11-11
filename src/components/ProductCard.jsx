@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as api from '../services/api';
 
@@ -40,6 +41,12 @@ export default class ProductCard extends Component {
           Adicionar ao Carrinho
         </button>
 
+        <Link
+          data-testid="product-detail-link"
+          to={ `product/${id}` }
+        >
+          Teste
+        </Link>
       </div>
     );
   }
