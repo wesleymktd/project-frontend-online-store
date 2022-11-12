@@ -4,7 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class ItemCart extends Component {
   render() {
-    const { title, thumbnail, price, quantity } = this.props;
+    const { title,
+      thumbnail,
+      price,
+      quantity,
+      incrementItem,
+      decrementItem,
+      removeItem,
+    } = this.props;
     return (
       <div
         style={ { width: '15rem', margin: '5px' } }
@@ -29,16 +36,31 @@ export default class ItemCart extends Component {
           <span data-testid="shopping-cart-product-quantity">{ quantity }</span>
         </div>
         <button
+          name={ title }
+          onClick={ incrementItem }
+          data-testid="product-increase-quantity"
           className="btn btn-outline-dark btn-sm"
           type="button"
         >
           +
         </button>
         <button
+          name={ title }
+          onClick={ decrementItem }
+          data-testid="product-decrease-quantity"
           className="btn btn-outline-dark btn-sm"
           type="button"
         >
           -
+        </button>
+        <button
+          name={ title }
+          onClick={ removeItem }
+          data-testid="remove-product"
+          className="btn btn-danger"
+          type="button"
+        >
+          Excluir item
         </button>
       </div>
     );
@@ -50,6 +72,9 @@ ItemCart.propTypes = {
   thumbnail: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   quantity: PropTypes.number,
+  incrementItem: PropTypes.func.isRequired,
+  decrementItem: PropTypes.func.isRequired,
+  removeItem: PropTypes.func.isRequired,
 };
 
 ItemCart.defaultProps = {

@@ -17,6 +17,43 @@ export default class Carrinho extends Component {
     });
   };
 
+  incrementItem = (event) => {
+    const { cart } = this.state;
+    const itemClick = event.target.name;
+    const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const a = cart.find((e) => e.title === itemClick);
+    const index = currentCart.findIndex((item) => item.title === itemClick);
+    a.quantity += 1;
+    cart[index].quantity = a.quantity;
+    this.setState({ cart });
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
+
+  decrementItem = (event) => {
+    const { cart } = this.state;
+    const itemClick = event.target.name;
+    const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const a = cart.find((e) => e.title === itemClick);
+    const index = currentCart.findIndex((item) => item.title === itemClick);
+    if (cart[index].quantity > 1) {
+      a.quantity -= 1;
+      cart[index].quantity = a.quantity;
+      this.setState({ cart });
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+  };
+
+  removeItem = (event) => {
+    const { cart } = this.state;
+    const itemClick = event.target.name;
+    const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+    // const a = cart.find((e) => e.title === itemClick);
+    const index = currentCart.findIndex((item) => item.title === itemClick);
+    cart.splice(index, 1);
+    this.setState({ cart });
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
+
   render() {
     const { cart } = this.state;
     return (
@@ -32,6 +69,9 @@ export default class Carrinho extends Component {
               cart.map((item) => (
                 <ItemCart
                   { ...item }
+                  incrementItem={ this.incrementItem }
+                  decrementItem={ this.decrementItem }
+                  removeItem={ this.removeItem }
                   key={ item.id }
                 />
               ))
