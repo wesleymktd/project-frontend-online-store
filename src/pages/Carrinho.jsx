@@ -4,7 +4,6 @@ import ItemCart from '../components/ItemCart';
 export default class Carrinho extends Component {
   state = {
     cart: [],
-    quantidade: 1,
   };
 
   componentDidMount() {
@@ -19,20 +18,41 @@ export default class Carrinho extends Component {
   };
 
   incrementItem = (event) => {
-    const { quantidade } = this.state;
-    this.setState((prev) => ({ quantidade: prev.quantidade + 1 }), () => {
-      const storage = JSON.parse(localStorage.getItem('cart'));
-      const itemClicado = storage.filter((itemStorage) => (
-        event.target.name === itemStorage.title));
-      itemClicado[0].quantity += quantidade;
-      // localStorage.setItem('cart', JSON.stringify(itemClicado));
-    });
+    const { cart } = this.state;
+    const itemClick = event.target.name;
+    const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const a = cart.find((e) => e.title === itemClick);
+    const index = currentCart.findIndex((item) => item.title === itemClick);
+    a.quantity += 1;
+    cart[index].quantity = a.quantity;
+    this.setState({ cart });
+    localStorage.setItem('cart', JSON.stringify(cart));
   };
 
-  // decrementItem = (event) => {
-  //   const { cart, quantidade } = this.state;
-  //   this.setState((prev) => ({ quantidade: prev.quantidade - 1 }));
-  // };
+  decrementItem = (event) => {
+    const { cart } = this.state;
+    const itemClick = event.target.name;
+    const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const a = cart.find((e) => e.title === itemClick);
+    const index = currentCart.findIndex((item) => item.title === itemClick);
+    if (cart[index].quantity > 1) {
+      a.quantity -= 1;
+      cart[index].quantity = a.quantity;
+      this.setState({ cart });
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+  };
+
+  removeItem = (event) => {
+    const { cart } = this.state;
+    const itemClick = event.target.name;
+    const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+    // const a = cart.find((e) => e.title === itemClick);
+    const index = currentCart.findIndex((item) => item.title === itemClick);
+    cart.splice(index, 1);
+    this.setState({ cart });
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
 
   render() {
     const { cart } = this.state;

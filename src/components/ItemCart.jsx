@@ -45,6 +45,7 @@ export default class ItemCart extends Component {
           +
         </button>
         <button
+          name={ title }
           onClick={ decrementItem }
           data-testid="product-decrease-quantity"
           className="btn btn-outline-dark btn-sm"
@@ -53,6 +54,7 @@ export default class ItemCart extends Component {
           -
         </button>
         <button
+          name={ title }
           onClick={ removeItem }
           data-testid="remove-product"
           className="btn btn-danger"
