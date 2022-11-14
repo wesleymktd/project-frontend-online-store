@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import ItemCart from '../components/ItemCart';
 
 export default class Carrinho extends Component {
@@ -59,7 +60,7 @@ export default class Carrinho extends Component {
     return (
       <div>
         {
-          !cart ? (
+          !cart.length > 0 ? (
             <p
               data-testid="shopping-cart-empty-message"
             >
@@ -77,6 +78,13 @@ export default class Carrinho extends Component {
               ))
             )
         }
+        <Link
+          className="btn btn-primary"
+          data-testid="checkout-products"
+          to="/checkout"
+        >
+          Finalizar Compras
+        </Link>
       </div>
 
     );
