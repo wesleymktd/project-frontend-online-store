@@ -60,7 +60,7 @@ export default class Carrinho extends Component {
     return (
       <div>
         {
-          !cart.length > 0 ? (
+          (!cart || !cart.length > 0) ? (
             <p
               data-testid="shopping-cart-empty-message"
             >
