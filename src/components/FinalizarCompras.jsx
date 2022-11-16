@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import CardFinish from './CardFinish';
+import Select from './Select';
 
 export default class FinalizarCompras extends Component {
   state = {
@@ -14,7 +15,6 @@ export default class FinalizarCompras extends Component {
     complemento: '',
     numero: '',
     cidade: '',
-    estado: '',
     Pay: '',
     validate: true,
   };
@@ -30,65 +30,31 @@ export default class FinalizarCompras extends Component {
 
   onInputChange = (event) => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    }, () => {
-      const {
-        nomeCompleto,
-        email,
-        CPF,
-        telefone,
-        CEP,
-        endereço,
-        complemento,
-        numero,
-        cidade,
-        estado,
-        Pay,
-      } = this.state;
-      const validate = nomeCompleto.length > 0 && email.length > 0
-            && CPF.length > 0 && telefone.length > 0 && CEP.length > 0
-            && endereço.length > 0 && complemento.length > 0
-            && numero.length > 0 && cidade.length > 0
-            && estado.length > 0 && Pay.length > 0;
-      this.setState({ validate: !validate });
-    });
+    this.setState({ [name]: value });
   };
 
   onClickButton = () => {
-    // const validate = nomeCompleto.length === 0 || email.length === 0
-    // || CPF.length === 0 || telefone.length === 0 || CEP.length === 0
-    // || endereço.length === 0 || complemento.length === 0
-    // || numero.length === 0 || cidade.length === 0
-    // || estado.length === 0 || Pay.length === 0;
+    const { nomeCompleto, email, CPF, telefone, CEP, endereço, Pay } = this.state;
     const { history } = this.props;
-    localStorage.setItem('cart', JSON.stringify([]));
-    history.push('/');
+    if (nomeCompleto.length > 0 && email.length > 0 && CPF.length > 0
+      && telefone.length > 0 && CEP.length > 0 && endereço.length > 0 && Pay.length > 0) {
+      this.setState({ validate: true }, () => {
+        localStorage.setItem('cart', JSON.stringify([]));
+        history.push('/');
+      });
+    } else {
+      this.setState({ validate: false });
+    }
   };
 
   render() {
     const {
-      itensCarrinho,
-      nomeCompleto,
-      email,
-      CPF,
-      telefone,
-      CEP,
-      endereço,
-      complemento,
-      numero,
-      cidade,
-      validate,
-    } = this.state;
+      itensCarrinho, nomeCompleto, email, CPF, telefone, CEP, endereço, complemento,
+      numero, cidade, validate } = this.state;
     return (
       <div>
         <h1>Finalize suas compras!</h1>
-        {
-          itensCarrinho.map((item) => (<CardFinish
-            { ...item }
-            key={ item.id }
-          />))
-        }
+        { itensCarrinho.map((item) => (<CardFinish { ...item } key={ item.id } />)) }
         <form>
           <div>
             <br />
@@ -104,22 +70,18 @@ export default class FinalizarCompras extends Component {
                 onChange={ this.onInputChange }
               />
             </label>
-
             <label className="form-label" htmlFor="cpf">
               CPF
               <input
                 value={ CPF }
                 type="text"
                 className="form-control"
-                // pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
                 id="cpf"
-                title="000.000.000-00"
                 data-testid="checkout-cpf"
                 name="CPF"
                 onChange={ this.onInputChange }
               />
             </label>
-
             <label className="form-label" htmlFor="tel">
               Telefone
               <input
@@ -127,14 +89,11 @@ export default class FinalizarCompras extends Component {
                 type="tel"
                 className="form-control"
                 id="number"
-                // pattern="([0-9]{2})[0-9]{5}-[0-9]{4}"
-                // placeholder="Format: (xx) XXXXX-XXXX"
                 data-testid="checkout-phone"
                 name="telefone"
                 onChange={ this.onInputChange }
               />
             </label>
-
             <label className="form-label" htmlFor="email">
               Email
               <input
@@ -147,7 +106,6 @@ export default class FinalizarCompras extends Component {
                 onChange={ this.onInputChange }
               />
             </label>
-
             <label className="form-label" htmlFor="cep">
               CEP
               <input
@@ -160,7 +118,6 @@ export default class FinalizarCompras extends Component {
                 onChange={ this.onInputChange }
               />
             </label>
-
             <label className="form-label" htmlFor="location">
               Endereço
               <input
@@ -173,7 +130,6 @@ export default class FinalizarCompras extends Component {
                 onChange={ this.onInputChange }
               />
             </label>
-
             <label className="form-label" htmlFor="complemento">
               Complemento
               <input
@@ -185,7 +141,6 @@ export default class FinalizarCompras extends Component {
                 onChange={ this.onInputChange }
               />
             </label>
-
             <label className="form-label" htmlFor="number">
               Numero
               <input
@@ -197,7 +152,6 @@ export default class FinalizarCompras extends Component {
                 onChange={ this.onInputChange }
               />
             </label>
-
             <label className="form-label" htmlFor="cidade">
               Cidade
               <input
@@ -209,44 +163,7 @@ export default class FinalizarCompras extends Component {
                 onChange={ this.onInputChange }
               />
             </label>
-
-            <select
-              className="form-select"
-              id="estado"
-              name="estado"
-              onChange={ this.onInputChange }
-            >
-              <option selected>Selecione seu estado</option>
-              <option value="AC">Acre</option>
-              <option value="AL">Alagoas</option>
-              <option value="AP">Amapá</option>
-              <option value="AM">Amazonas</option>
-              <option value="BA">Bahia</option>
-              <option value="CE">Ceará</option>
-              <option value="DF">Distrito Federal</option>
-              <option value="ES">Espírito Santo</option>
-              <option value="GO">Goiás</option>
-              <option value="MA">Maranhão</option>
-              <option value="MT">Mato Grosso</option>
-              <option value="MS">Mato Grosso do Sul</option>
-              <option value="MG">Minas Gerais</option>
-              <option value="PA">Pará</option>
-              <option value="PB">Paraíba</option>
-              <option value="PR">Paraná</option>
-              <option value="PE">Pernambuco</option>
-              <option value="PI">Piauí</option>
-              <option value="RJ">Rio de Janeiro</option>
-              <option value="RN">Rio Grande do Norte</option>
-              <option value="RS">Rio Grande do Sul</option>
-              <option value="RO">Rondônia</option>
-              <option value="RR">Roraima</option>
-              <option value="SC">Santa Catarina</option>
-              <option value="SP">São Paulo</option>
-              <option value="SE">Sergipe</option>
-              <option value="TO">Tocantins</option>
-              <option value="EX">Estrangeiro</option>
-            </select>
-
+            <Select onInputChange={ this.onInputChange } />
           </div>
           <div>
             <br />
@@ -267,7 +184,6 @@ export default class FinalizarCompras extends Component {
               />
               Boleto
             </label>
-
             <label
               className="form-check-label"
               htmlFor="Visa"
@@ -284,7 +200,6 @@ export default class FinalizarCompras extends Component {
               />
               Visa
             </label>
-
             <label
               className="form-check-label"
               htmlFor="MasterCard"
@@ -301,33 +216,25 @@ export default class FinalizarCompras extends Component {
               />
               MasterCard
             </label>
-
-            <label
-              className="form-check-label"
-              htmlFor="Elo"
-              style={ { display: 'flex' } }
-            >
+            <label className="form-check-label" htmlFor="E" style={ { display: 'flex' } }>
               <input
                 name="Pay"
                 className="form-check-input"
                 value="Elo"
-                id="Elo"
+                id="E"
                 type="radio"
                 data-testid="elo-payment"
                 onChange={ this.onInputChange }
               />
               Elo
             </label>
-            {
-            validate && <p data-testid="error-msg">Campos inválidos</p>
-            }
+            { !validate && <p data-testid="error-msg">Campos inválidos</p> }
           </div>
           <button
             onClick={ this.onClickButton }
             data-testid="checkout-btn"
             className="btn btn-success"
             type="button"
-            disabled={ validate }
           >
             Enviar
           </button>
@@ -336,3 +243,8 @@ export default class FinalizarCompras extends Component {
     );
   }
 }
+FinalizarCompras.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
