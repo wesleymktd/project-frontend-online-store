@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import CardFinish from './CardFinish';
 
 export default class FinalizarCompras extends Component {
@@ -16,7 +16,7 @@ export default class FinalizarCompras extends Component {
     cidade: '',
     estado: '',
     Pay: '',
-    // validate: false,
+    validate: true,
   };
 
   componentDidMount() {
@@ -51,30 +51,19 @@ export default class FinalizarCompras extends Component {
             && endereço.length > 0 && complemento.length > 0
             && numero.length > 0 && cidade.length > 0
             && estado.length > 0 && Pay.length > 0;
-      this.setState({ validate });
+      this.setState({ validate: !validate });
     });
   };
 
   onClickButton = () => {
-    // const {
-    //   nomeCompleto,
-    //   email,
-    //   CPF,
-    //   telefone,
-    //   CEP,
-    //   endereço,
-    //   complemento,
-    //   numero,
-    //   cidade,
-    //   estado,
-    //   Pay,
-    // } = this.state;
     // const validate = nomeCompleto.length === 0 || email.length === 0
     // || CPF.length === 0 || telefone.length === 0 || CEP.length === 0
     // || endereço.length === 0 || complemento.length === 0
     // || numero.length === 0 || cidade.length === 0
     // || estado.length === 0 || Pay.length === 0;
+    const { history } = this.props;
     localStorage.setItem('cart', JSON.stringify([]));
+    history.push('/');
   };
 
   render() {
@@ -139,7 +128,7 @@ export default class FinalizarCompras extends Component {
                 className="form-control"
                 id="number"
                 // pattern="([0-9]{2})[0-9]{5}-[0-9]{4}"
-                placeholder="Format: (xx) XXXXX-XXXX"
+                // placeholder="Format: (xx) XXXXX-XXXX"
                 data-testid="checkout-phone"
                 name="telefone"
                 onChange={ this.onInputChange }
@@ -330,7 +319,7 @@ export default class FinalizarCompras extends Component {
               Elo
             </label>
             {
-            !validate && <p data-testid="error-msg">Campos inválidos</p>
+            validate && <p data-testid="error-msg">Campos inválidos</p>
             }
           </div>
           <button
@@ -338,6 +327,7 @@ export default class FinalizarCompras extends Component {
             data-testid="checkout-btn"
             className="btn btn-success"
             type="button"
+            disabled={ validate }
           >
             Enviar
           </button>
