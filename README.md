@@ -1,12 +1,11 @@
 ## 🧐 Sobre
 
 <p align="left"> 
-	Neste projeto, foi desenvolvido uma versão simplificada, sem persistência no banco de dados, de uma loja online onde a pessoa usuária seja capaz de:
-	
-	- Buscar produtos por termos e categorias a partir da API do Mercado Livre;
-	- Interagir com os produtos buscados de modo a adicioná-los e removê-los de um carrinho de compras em diferentes quantidades;
-	- Visualizar detalhes e avaliações prévias de um produto, bem como criar novas avaliações e;
-	- Simular a finalização da compra dos itens selecionados.
+Neste projeto, foi desenvolvido uma versão simplificada, sem persistência no banco de dados, de uma loja online onde a pessoa usuária seja capaz de:	
+- Buscar produtos por termos e categorias a partir da API do Mercado Livre;
+- Interagir com os produtos buscados de modo a adicioná-los e removê-los de um carrinho de compras em diferentes quantidades;
+- Visualizar detalhes e avaliações prévias de um produto, bem como criar novas avaliações e;
+- Simular a finalização da compra dos itens selecionados.
 </p>
 
 
